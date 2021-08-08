@@ -18,6 +18,5 @@ class HomeController extends GetxController {
     if(youtubeVideoResult != null && youtubeVideoResult.videoList != null && youtubeVideoResult.videoList!.length > 0){
       youtubeResult(youtubeVideoResult);
     }
-
   }
 }

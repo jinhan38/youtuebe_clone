@@ -10,27 +10,32 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            title: CustomAppBar(),
-            floating: true,
-            snap: true,
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return GestureDetector(
-                  child: VideoWidget(),
-                  onTap: () {
-                    Get.toNamed("/detail/239587");
-                  },
-                );
-              },
-              childCount: 10,
+      child: Obx(
+        () => CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              title: CustomAppBar(),
+              floating: true,
+              snap: true,
             ),
-          ),
-        ],
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return GestureDetector(
+                    child: VideoWidget(video : controller.youtubeResult.value.videoList![index]),
+                    onTap: () {
+                      Get.toNamed("/detail/239587");
+                    },
+                  );
+                },
+                childCount: controller.youtubeResult.value.videoList == null
+                    ? 0
+                    : controller.youtubeResult.value.videoList?.length,
+                // childCount: controller.youtubeResult.value.videoList?.length,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

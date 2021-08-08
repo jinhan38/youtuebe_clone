@@ -2,7 +2,6 @@
 //
 //     final video = videoFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 Video videoFromJson(String str) => Video.fromJson(json.decode(str));
@@ -58,6 +57,37 @@ class Id {
 }
 
 class Snippet {
+  DateTime publishedAt;
+  String channelId;
+
+  String title;
+  String description;
+
+  Thumbnails thumbnails;
+  String channelTitle;
+  String liveBroadcastContent;
+
+  // DateTime publishTime;
+
+  // Snippet(
+  //     {DateTime? publishedAt,
+  //     String? channelId,
+  //     String? title,
+  //     String? description,
+  //     Thumbnails? thumbnails,
+  //     String? channelTitle,
+  //     String? liveBroadcastContent,
+  //     DateTime? publishTime}) {
+  //   this.publishedAt = publishedAt!;
+  //   this.channelId = channelId!;
+  //   this.title = title!;
+  //   this.description = description!;
+  //   this.thumbnails = thumbnails!;
+  //   this.channelTitle = channelTitle!;
+  //   this.liveBroadcastContent = liveBroadcastContent!;
+  //   this.publishTime = publishTime!;
+  // }
+
   Snippet({
     required this.publishedAt,
     required this.channelId,
@@ -66,17 +96,7 @@ class Snippet {
     required this.thumbnails,
     required this.channelTitle,
     required this.liveBroadcastContent,
-    required this.publishTime,
   });
-
-  final DateTime publishedAt;
-  final String channelId;
-  final String title;
-  final String description;
-  final Thumbnails thumbnails;
-  final String channelTitle;
-  final String liveBroadcastContent;
-  final DateTime publishTime;
 
   factory Snippet.fromJson(Map<String, dynamic> json) => Snippet(
         publishedAt: DateTime.parse(json["publishedAt"]),
@@ -86,7 +106,12 @@ class Snippet {
         thumbnails: Thumbnails.fromJson(json["thumbnails"]),
         channelTitle: json["channelTitle"],
         liveBroadcastContent: json["liveBroadcastContent"],
-        publishTime: DateTime.parse(json["publishTime"]),
+        // publishTime: json["publishTime"] == null
+        //     ? DateTime.now()
+        //     : DateTime.parse(json["publishTime"]),
+        // publishTime: json["publishTime"] == null
+        //     ? DateTime.now()
+        //     : DateTime.parse(json["publishTime"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -97,7 +122,7 @@ class Snippet {
         "thumbnails": thumbnails.toJson(),
         "channelTitle": channelTitle,
         "liveBroadcastContent": liveBroadcastContent,
-        "publishTime": publishTime.toIso8601String(),
+        // "publishTime": publishTime.toIso8601String(),
       };
 }
 
@@ -108,9 +133,16 @@ class Thumbnails {
     required this.high,
   });
 
-  final Default thumbnailsDefault;
-  final Default medium;
-  final Default high;
+  // Thumbnails({
+  //   required this.thumbnailsDefault,
+  //   required this.medium,
+  //   required this.high,
+  // });
+
+  Default thumbnailsDefault;
+
+  Default medium;
+  Default high;
 
   factory Thumbnails.fromJson(Map<String, dynamic> json) => Thumbnails(
         thumbnailsDefault: Default.fromJson(json["default"]),
@@ -126,20 +158,22 @@ class Thumbnails {
 }
 
 class Default {
-  Default({
-    required this.url,
-    required this.width,
-    required this.height,
-  });
+  // Default({String url, int? width, int? height}) {
+  //   this.url = url!;
+  //   this.width = width!;
+  //   this.height = height!;
+  // }
 
-  final String url;
-  final int width;
-  final int height;
+  Default(this.url, this.width, this.height);
+
+  String url = "";
+  int width = 0;
+  int height = 0;
 
   factory Default.fromJson(Map<String, dynamic> json) => Default(
-        url: json["url"],
-        width: json["width"],
-        height: json["height"],
+        json["url"],
+        json["width"],
+        json["height"],
       );
 
   Map<String, dynamic> toJson() => {
